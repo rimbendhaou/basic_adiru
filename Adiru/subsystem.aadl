@@ -1,0 +1,90 @@
+package subsystem
+public
+
+	with dataType;
+	with adiru_hardware;
+	with adiru_software;
+	with fms_software;
+
+	-----------------------------------------------------------------
+	-------------------------device RDC---------------------------------
+	-----------------------------------------------------------------
+	device RDC
+		features
+			pression: out event data port dataType::pression;
+			afdx_access: requires bus access adiru_hardware::physical_afdx_link.impl;
+	end RDC;
+
+	-----------------------------------------------------------------
+	------------------------- adiru ---------------------------------
+	-----------------------------------------------------------------
+	system adiru_system
+		features
+            -- software interface
+			data_in: in event data port dataType::pression;
+			data_out: out event data port dataType::pression;
+			-- hardware interface
+			afdx_access: requires bus access adiru_hardware::physical_afdx_link.impl;
+		flows
+			flow_adiru: flow path data_in -> data_out;
+	end adiru_system;
+
+	system implementation adiru_system.impl
+
+		subcomponents
+			mainmemory: memory adiru_hardware::mainmemory.adiru;
+			cpu: processor adiru_hardware::arinckernel.adiru;
+			adr: process adiru_software::prs_ADR.impl;
+			ir: process adiru_software::prs_IR.impl;
+
+		connections
+			cn1: port data_in -> adr.data_in;
+			cn2: port adr.data_out -> ir.data_in;
+			cn3: port ir.data_out -> data_out;
+
+			flows
+				flow_adiru: flow path data_in -> cn1-> adr.fromIntoOut ->  cn3 ->data_out;
+
+		properties
+			Actual_Processor_Binding => (reference (cpu.partition_ADR)) applies to adr;
+			Actual_Processor_Binding => (reference (cpu.partition_IR)) applies to ir;
+
+			Actual_Memory_Binding => (reference (mainmemory.mem_ADR)) applies to adr;
+			Actual_Memory_Binding => (reference (mainmemory.mem_IR)) applies to ir;
+	end adiru_system.impl;
+
+	-----------------------------------------------------------------
+	-----------------------------FMS---------------------------------
+	-----------------------------------------------------------------
+	system fms_system
+		features
+		-- software interface
+			data_in: in event data port dataType::pression;
+
+			data_out: out event data port dataType::pression;
+			-- hardware interface
+			afdx_access: requires bus access adiru_hardware::physical_afdx_link.impl;
+			
+
+	end fms_system;
+
+	system implementation fms_system.impl
+
+		subcomponents
+			mainmemory: memory adiru_hardware::mainmemory.fms;
+			cpu: processor adiru_hardware::arinckernel.fms;
+			fms: process fms_software::prs_FMS.impl;
+
+		connections
+			cn1: port data_in -> fms.data_in;
+			cn2: port fms.data_out -> data_out;
+
+			
+
+		properties
+			Actual_Processor_Binding => (reference (cpu.partition_FMS)) applies to fms;
+
+			Actual_Memory_Binding => (reference (mainmemory.mem_fms)) applies to fms;
+	end fms_system.impl;
+
+end subsystem;

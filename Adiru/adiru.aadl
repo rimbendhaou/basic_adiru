@@ -1,0 +1,40 @@
+package adiru
+
+public
+	with subsystem;
+	with adiru_hardware;
+
+	system adiru
+	end adiru;
+
+	system implementation adiru.impl
+		subcomponents
+			afdx_network: bus adiru_hardware::physical_afdx_link.impl;
+			adiru: system subsystem::adiru_system.impl;
+			fms: system subsystem::fms_system.impl;
+			sensor_rdc: device subsystem::RDC;
+			sw1: device adiru_hardware::afdx_switch;
+
+		connections
+			cn1: port sensor_rdc.pression -> adiru.data_in;
+			cn2: port adiru.data_out -> fms.data_in;
+			-- busses accesses
+			adiru_afdxAccess: bus access afdx_network -> adiru.afdx_access;
+			fms_afdxaccess: bus access afdx_network -> fms.afdx_access;
+			sensor_rdc_afdxAccess: bus access afdx_network -> sensor_rdc.afdx_access;
+			sw1_afdxAcces: bus access afdx_network -> sw1.afdx_access;
+		properties
+		
+			
+			Actual_connection_binding => (reference (afdx_network.VL1)) applies to cn1;
+			Actual_connection_binding => (reference (afdx_network.VL2)) applies to cn2;
+			
+
+			-- first route possibility
+			Actual_connection_binding => (reference (sw1)) applies to afdx_network.VL1;
+			Actual_connection_binding => (reference (sw1)) applies to afdx_network.VL2;
+
+	end adiru.impl;
+
+end adiru;
+

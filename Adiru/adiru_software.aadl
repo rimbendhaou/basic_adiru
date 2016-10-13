@@ -1,0 +1,83 @@
+package adiru_software
+public
+
+	with dataType;
+
+	-------------------------------------------------------------------
+	-----------------------processes-------------------------------------
+	-------------------------------------------------------------------
+	process prs_ADR
+		features
+			data_in: in event data port dataType::pression;
+			data_out: out event data port dataType::pression;
+		flows
+			fromIntoOut: flow path data_in -> data_out;
+	end prs_ADR;
+
+	process implementation prs_ADR.impl
+		subcomponents
+			ADR: thread th_ADR;
+		connections
+			cn1: port data_in -> ADR.th_data_in;
+			cn2: port ADR.th_data_out -> data_out;
+		flows
+			fromIntoOut: flow path data_in -> cn1 -> ADR.flow_th_adr -> cn2 -> data_out;
+	end prs_ADR.impl;
+
+	process prs_IR
+		features
+			data_in: in event data port dataType::pression;
+
+			data_out: out event data port dataType::pression;
+		flows
+			fromInToOut: flow path data_in -> data_out;
+	end prs_IR;
+
+	process implementation prs_IR.impl
+		subcomponents
+			IR: thread th_IR;
+		connections
+			cn1: port data_in -> IR.th_data_in;
+
+			cn2: port IR.th_data_out -> data_out;
+		flows
+			fromInToOut: flow path data_in -> cn1 -> IR.flow_th_IR -> cn2 -> data_out;
+	end prs_IR.impl;
+
+	-------------------------------------------------------------------
+	-----------------------threads-------------------------------------
+	-------------------------------------------------------------------
+	thread th_ADR
+
+		features
+			th_data_in: in event data port dataType::pression;
+			th_data_out: out event data port dataType::pression;
+		flows
+			flow_th_adr: flow path th_data_in -> th_data_out;
+		properties
+			Dispatch_protocol => periodic;
+			period => 50 ms;
+			compute_execution_time => 0 ms .. 25 ms;
+			deadline => 50 ms;
+			--	priority => 7;
+
+	end th_ADR;
+
+	thread th_IR
+		features
+			th_data_in: in event data port dataType::pression;
+
+			th_data_out: out event data port dataType::pression;
+		flows
+			flow_th_IR: flow path th_data_in -> th_data_out;
+
+		properties
+			Dispatch_protocol => periodic;
+			period => 50 ms;
+			compute_execution_time => 0 ms .. 25 ms;
+			deadline => 50 ms;
+			--	priority => 6;
+
+	end th_IR;
+
+end adiru_software;

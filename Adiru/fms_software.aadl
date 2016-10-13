@@ -1,0 +1,56 @@
+package fms_software
+public
+
+with dataType;
+-------------------------------------------------------------------
+-----------------------processes-------------------------------------
+-------------------------------------------------------------------
+
+process prs_FMS
+	features
+	data_in : in event data port dataType::pression;
+	data_out : out event data port dataType::pression;
+	
+	--flows
+	--fromIdToQuery : flow path wpId1_apex -> query1_apex;
+	--fromAnswerToInfo : flow path answer1_apex -> wpInfo1_apex;
+	--fromSpeedToETA : flow path speed1_apex -> ETA1_apex;
+end prs_FMS;
+
+process implementation prs_FMS.impl
+	subcomponents
+		FMS : thread th_FMs;	
+	connections
+		cn1 : port data_in -> FMS.th_data_in;
+		cn2 : port FMS.th_data_out -> data_out;
+		
+	--flows
+	--fromIdToQuery : flow path wpId1_apex -> wpId1ApexToFunct -> FM1.waypoint_query-> query1FunctToApex -> query1_apex;
+	--fromAnswerToInfo : flow path answer1_apex -> answer1ApexToFunct -> FM1.waypoint_answer-> wpInfo1FunctToApex -> wpInfo1_apex;
+	--fromSpeedToETA : flow path speed1_apex -> speed1ApexToFunct ->FM1.ETA_calculation-> ETA1FunctToApex -> ETA1_apex;	
+end prs_FMS.impl;
+
+-------------------------------------------------------------------
+-----------------------threads-------------------------------------
+-------------------------------------------------------------------
+
+thread th_FMS
+
+	features
+	th_data_in : in event data port dataType::pression;
+	th_data_out : out event data port dataType::pression;
+	
+	--flows
+	--waypoint_query : flow path th_wpId1 -> th_query1;	
+	--waypoint_answer : flow path th_answer1 -> th_wpInfo1;
+	--ETA_calculation : flow path th_speed1 -> th_ETA1;
+	properties
+	Dispatch_protocol => periodic;
+	period => 60 ms;
+	compute_execution_time => 0 ms .. 30 ms;
+	deadline => 60 ms;
+--	priority => 7;
+
+end th_FMS;
+
+end fms_software;

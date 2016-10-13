@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aadl2:Package xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aadl2="http://aadl.info/AADL/2.0" name="adiru" publicSection="#//@ownedPublicSection">
+  <ownedPublicSection importedUnit="aadl2:Package subsystem.aadl#subsystem aadl2:Package adiru_hardware.aadl#adiru_hardware">
+    <ownedClassifier xsi:type="aadl2:SystemType" name="adiru"/>
+    <ownedClassifier xsi:type="aadl2:SystemImplementation" name="adiru.impl">
+      <ownedPropertyAssociation property="../Plugin_Resources/Predeclared_Property_Sets/Deployment_Properties.aadl#Deployment_Properties.Actual_Connection_Binding">
+        <appliesTo>
+          <path namedElement="#//@ownedPublicSection/@ownedClassifier.1/@ownedPortConnection.0"/>
+        </appliesTo>
+        <ownedValue>
+          <ownedValue xsi:type="aadl2:ListValue">
+            <ownedListElement xsi:type="aadl2:ReferenceValue">
+              <path namedElement="#//@ownedPublicSection/@ownedClassifier.1/@ownedBusSubcomponent.0">
+                <path namedElement="aadl2:VirtualBusSubcomponent adiru_hardware.aadl#/0/@ownedPublicSection/@ownedClassifier.4/@ownedVirtualBusSubcomponent.0"/>
+              </path>
+            </ownedListElement>
+          </ownedValue>
+        </ownedValue>
+      </ownedPropertyAssociation>
+      <ownedPropertyAssociation property="../Plugin_Resources/Predeclared_Property_Sets/Deployment_Properties.aadl#Deployment_Properties.Actual_Connection_Binding">
+        <appliesTo>
+          <path namedElement="#//@ownedPublicSection/@ownedClassifier.1/@ownedPortConnection.1"/>
+        </appliesTo>
+        <ownedValue>
+          <ownedValue xsi:type="aadl2:ListValue">
+            <ownedListElement xsi:type="aadl2:ReferenceValue">
+              <path namedElement="#//@ownedPublicSection/@ownedClassifier.1/@ownedBusSubcomponent.0">
+                <path namedElement="aadl2:VirtualBusSubcomponent adiru_hardware.aadl#/0/@ownedPublicSection/@ownedClassifier.4/@ownedVirtualBusSubcomponent.1"/>
+              </path>
+            </ownedListElement>
+          </ownedValue>
+        </ownedValue>
+      </ownedPropertyAssociation>
+      <ownedPropertyAssociation property="../Plugin_Resources/Predeclared_Property_Sets/Deployment_Properties.aadl#Deployment_Properties.Actual_Connection_Binding">
+        <ownedComment body="-- first route possibility"/>
+        <ownedComment body="-- first route possibility"/>
+        <appliesTo>
+          <path namedElement="#//@ownedPublicSection/@ownedClassifier.1/@ownedBusSubcomponent.0">
+            <path namedElement="aadl2:VirtualBusSubcomponent adiru_hardware.aadl#/0/@ownedPublicSection/@ownedClassifier.4/@ownedVirtualBusSubcomponent.0"/>
+          </path>
+        </appliesTo>
+        <ownedValue>
+          <ownedValue xsi:type="aadl2:ListValue">
+            <ownedListElement xsi:type="aadl2:ReferenceValue">
+              <path namedElement="#//@ownedPublicSection/@ownedClassifier.1/@ownedDeviceSubcomponent.1"/>
+            </ownedListElement>
+          </ownedValue>
+        </ownedValue>
+      </ownedPropertyAssociation>
+      <ownedPropertyAssociation property="../Plugin_Resources/Predeclared_Property_Sets/Deployment_Properties.aadl#Deployment_Properties.Actual_Connection_Binding">
+        <appliesTo>
+          <path namedElement="#//@ownedPublicSection/@ownedClassifier.1/@ownedBusSubcomponent.0">
+            <path namedElement="aadl2:VirtualBusSubcomponent adiru_hardware.aadl#/0/@ownedPublicSection/@ownedClassifier.4/@ownedVirtualBusSubcomponent.1"/>
+          </path>
+        </appliesTo>
+        <ownedValue>
+          <ownedValue xsi:type="aadl2:ListValue">
+            <ownedListElement xsi:type="aadl2:ReferenceValue">
+              <path namedElement="#//@ownedPublicSection/@ownedClassifier.1/@ownedDeviceSubcomponent.1"/>
+            </ownedListElement>
+          </ownedValue>
+        </ownedValue>
+      </ownedPropertyAssociation>
+      <ownedRealization implemented="#//@ownedPublicSection/@ownedClassifier.0"/>
+      <ownedAccessConnection name="adiru_afdxAccess">
+        <ownedComment body="-- busses accesses"/>
+        <ownedComment body="-- busses accesses"/>
+        <destination context="#//@ownedPublicSection/@ownedClassifier.1/@ownedSystemSubcomponent.0" connectionEnd="aadl2:BusAccess subsystem.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedBusAccess.0"/>
+        <source connectionEnd="#//@ownedPublicSection/@ownedClassifier.1/@ownedBusSubcomponent.0"/>
+      </ownedAccessConnection>
+      <ownedAccessConnection name="fms_afdxaccess">
+        <destination context="#//@ownedPublicSection/@ownedClassifier.1/@ownedSystemSubcomponent.1" connectionEnd="aadl2:BusAccess subsystem.aadl#/0/@ownedPublicSection/@ownedClassifier.3/@ownedBusAccess.0"/>
+        <source connectionEnd="#//@ownedPublicSection/@ownedClassifier.1/@ownedBusSubcomponent.0"/>
+      </ownedAccessConnection>
+      <ownedAccessConnection name="sensor_rdc_afdxAccess">
+        <destination context="#//@ownedPublicSection/@ownedClassifier.1/@ownedDeviceSubcomponent.0" connectionEnd="aadl2:BusAccess subsystem.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedBusAccess.0"/>
+        <source connectionEnd="#//@ownedPublicSection/@ownedClassifier.1/@ownedBusSubcomponent.0"/>
+      </ownedAccessConnection>
+      <ownedAccessConnection name="sw1_afdxAcces">
+        <destination context="#//@ownedPublicSection/@ownedClassifier.1/@ownedDeviceSubcomponent.1" connectionEnd="aadl2:BusAccess adiru_hardware.aadl#/0/@ownedPublicSection/@ownedClassifier.5/@ownedBusAccess.0"/>
+        <source connectionEnd="#//@ownedPublicSection/@ownedClassifier.1/@ownedBusSubcomponent.0"/>
+      </ownedAccessConnection>
+      <ownedPortConnection name="cn1">
+        <destination context="#//@ownedPublicSection/@ownedClassifier.1/@ownedSystemSubcomponent.0" connectionEnd="aadl2:EventDataPort subsystem.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedEventDataPort.0"/>
+        <source context="#//@ownedPublicSection/@ownedClassifier.1/@ownedDeviceSubcomponent.0" connectionEnd="aadl2:EventDataPort subsystem.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedEventDataPort.0"/>
+      </ownedPortConnection>
+      <ownedPortConnection name="cn2">
+        <destination context="#//@ownedPublicSection/@ownedClassifier.1/@ownedSystemSubcomponent.1" connectionEnd="aadl2:EventDataPort subsystem.aadl#/0/@ownedPublicSection/@ownedClassifier.3/@ownedEventDataPort.0"/>
+        <source context="#//@ownedPublicSection/@ownedClassifier.1/@ownedSystemSubcomponent.0" connectionEnd="aadl2:EventDataPort subsystem.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedEventDataPort.1"/>
+      </ownedPortConnection>
+      <ownedBusSubcomponent name="afdx_network" busSubcomponentType="aadl2:BusImplementation adiru_hardware.aadl#adiru_hardware.physical_afdx_link.impl"/>
+      <ownedDeviceSubcomponent name="sensor_rdc" deviceSubcomponentType="aadl2:DeviceType subsystem.aadl#subsystem.RDC"/>
+      <ownedDeviceSubcomponent name="sw1" deviceSubcomponentType="aadl2:DeviceType adiru_hardware.aadl#adiru_hardware.afdx_switch"/>
+      <ownedSystemSubcomponent name="adiru" systemSubcomponentType="aadl2:SystemImplementation subsystem.aadl#subsystem.adiru_system.impl"/>
+      <ownedSystemSubcomponent name="fms" systemSubcomponentType="aadl2:SystemImplementation subsystem.aadl#subsystem.fms_system.impl"/>
+    </ownedClassifier>
+  </ownedPublicSection>
+</aadl2:Package>

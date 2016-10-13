@@ -1,0 +1,20 @@
+package dataType
+public
+
+
+data pression
+--	properties
+--	Source_Data_Size => 600 Bytes; 
+end pression;
+
+data data_in 
+	properties
+	Data_Size => 600 Bytes;
+end data_in;
+
+data data_out
+	properties
+	Data_Size => 1000 Bytes; 
+end data_out;
+
+end dataType;
